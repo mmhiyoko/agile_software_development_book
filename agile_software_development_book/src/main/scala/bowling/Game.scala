@@ -6,7 +6,7 @@ class Game {
 
   private val itsScorer = new Scorer
 
-  def score: Int = scoreForFrame(getCurrentFrame-1)
+  def score: Int = scoreForFrame(itsCurrentFrame-1)
 
   def add(pins: Int): Unit = {
     itsScorer.addThrow(pins)
