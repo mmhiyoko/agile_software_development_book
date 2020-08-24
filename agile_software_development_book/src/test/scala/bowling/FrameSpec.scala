@@ -8,5 +8,11 @@ class FrameSpec extends ScalaTestSpec {
       val f = new Frame()
       f.getScore shouldEqual 0
     }
+
+    "一度投げた時" in {
+      val f = new Frame()
+      f.add(5)
+      f.getScore shouldEqual 5
+    }
   }
 }

@@ -1,5 +1,11 @@
 package bowling
 
 class Frame {
-  def getScore: Int = 0
+  private var itsScore = 0
+
+  def getScore: Int = itsScore
+
+  def add(pins: Int): Unit = {
+    itsScore += pins
+  }
 }
