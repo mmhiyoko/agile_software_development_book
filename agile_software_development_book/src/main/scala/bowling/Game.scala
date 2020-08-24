@@ -15,16 +15,25 @@ class Game {
 
   private def adjustCurrentFrame(pins: Int): Unit = {
     if (firstThrowInFrame) {
-      if (pins == 10)
-        itsCurrentFrame += 1
-      else
+      if (adjustFrameForStrike(pins) == false)
         firstThrowInFrame = false
     } else {
       firstThrowInFrame = true
-      itsCurrentFrame += 1
+      advanceFrame
     }
-    itsCurrentFrame = Math.min(11, itsCurrentFrame)
   }
+
+  private def adjustFrameForStrike(pins: Int): Boolean = {
+    if (pins == 10) {
+      advanceFrame
+      true
+    } else
+      false
+
+  }
+
+  private def advanceFrame: Unit =
+    itsCurrentFrame = Math.min(11, itsCurrentFrame + 1)
 
   def scoreForFrame(frame: Int): Int = itsScorer.scoreForFrame(frame)
 
