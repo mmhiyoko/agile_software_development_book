@@ -12,7 +12,6 @@ class Game {
   }
 
   def scoreForFrame(frame: Int): Int = {
-    println(itsThrows.take(frame))
     itsThrows.take(frame * 2).sum
   }
 }
