@@ -6,7 +6,7 @@ class Game {
   private var itsCurrentFrame: Int = 1
   private var firstThrow: Boolean = true
 
-  def score: Int = itsScore
+  def score: Int = scoreForFrame(getCurrentFrame-1)
 
   def add(pins: Int): Unit = {
     itsThrows = itsThrows :+ pins
@@ -24,20 +24,21 @@ class Game {
   }
 
   def scoreForFrame(frame: Int): Int = {
-    val frames = itsThrows.grouped(2).take(frame)
-    val nextFrames = itsThrows.grouped(2).take(frame+1).toList.tail :+ List(0, 0)
-    frames.zip(nextFrames).foldLeft(0: Int)((acc: Int, v: (List[Int], List[Int])) => {
-      v._1 match {
-        case firstThrow :: secondThrow :: _ =>
-          if (firstThrow + secondThrow == 10) {
-            acc + firstThrow + secondThrow + v._2.headOption.getOrElse(0)
-          }
-          else {
-            acc + firstThrow + secondThrow
-          }
-        case throws => acc + throws.sum
-      }
-    })
+    var ball = 0
+    var score = 0
+    for (currentFrame <- 1 to frame) {
+      val firstThrow = itsThrows.apply(ball)
+      ball += 1
+      val secondThrow = itsThrows.apply(ball)
+      ball += 1
+      val frameScore = firstThrow + secondThrow
+      println(frameScore)
+      if (frameScore == 10)
+        score += frameScore + itsThrows.apply(ball)
+      else
+        score += frameScore
+    }
+    score
   }
 
   def getCurrentFrame: Int = itsCurrentFrame
