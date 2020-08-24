@@ -37,10 +37,14 @@ class Game {
     for (currentFrame <- 1 to frame) {
       firstThrow = itsThrows.apply(ball)
       if (strike) {
+        score += 10 + nextTwoBallsForStrike
         ball += 1
-        score += 10 + nextTwoBalls
+      } else if (spare) {
+        score += 10 + nextBallForSpare
+        ball += 2
       } else {
-        score += handleSecondThrow
+        score += twoBallsInFrame
+        ball += 2
       }
     }
     score
@@ -53,7 +57,7 @@ class Game {
     val frameScore = firstThrow + secondThrow
     if (spare) {
       ball += 2
-      score += frameScore + nextBall
+      score += frameScore + nextBallForSpare
     } else {
       ball += 2
       score += frameScore
@@ -63,11 +67,13 @@ class Game {
 
   private def strike: Boolean = itsThrows.apply(ball) == 10
 
-  private def nextTwoBalls: Int = itsThrows.apply(ball) + itsThrows(ball+1)
+  private def nextTwoBallsForStrike: Int = itsThrows.apply(ball+1) + itsThrows(ball+2)
 
   private def spare: Boolean = itsThrows.apply(ball) + itsThrows.apply(ball+1) == 10
 
-  private def nextBall: Int = itsThrows.apply(ball)
+  private def nextBallForSpare: Int = itsThrows.apply(ball+2)
+
+  private def twoBallsInFrame: Int = itsThrows.apply(ball) + itsThrows.apply(ball+1)
 
   def getCurrentFrame: Int = itsCurrentFrame
 }
