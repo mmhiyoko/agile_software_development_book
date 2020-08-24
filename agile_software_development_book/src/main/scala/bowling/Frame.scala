@@ -8,4 +8,5 @@ class Frame {
   def add(pins: Int): Unit = {
     itsScore += pins
   }
+
 }
