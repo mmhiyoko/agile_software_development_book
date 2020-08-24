@@ -11,12 +11,15 @@ class Game {
   def add(pins: Int): Unit = {
     itsThrows = itsThrows :+ pins
     itsScore += pins
-    adjustCurrentFrame
+    adjustCurrentFrame(pins)
   }
 
-  def adjustCurrentFrame: Unit = {
+  def adjustCurrentFrame(pins: Int): Unit = {
     if (firstThrow) {
-      firstThrow = false
+      if (pins == 10)
+        itsCurrentFrame += 1
+      else
+        firstThrow = false
     } else {
       firstThrow = true
       itsCurrentFrame += 1
@@ -29,14 +32,17 @@ class Game {
     for (currentFrame <- 1 to frame) {
       val firstThrow = itsThrows.apply(ball)
       ball += 1
-      val secondThrow = itsThrows.apply(ball)
-      ball += 1
-      val frameScore = firstThrow + secondThrow
-      println(frameScore)
-      if (frameScore == 10)
-        score += frameScore + itsThrows.apply(ball)
-      else
-        score += frameScore
+      if (firstThrow == 10) {
+        score += 10 + itsThrows.apply(ball) + itsThrows.apply(ball+1)
+      } else {
+        val secondThrow = itsThrows.apply(ball)
+        ball += 1
+        val frameScore = firstThrow + secondThrow
+        if (frameScore == 10)
+          score += frameScore + itsThrows.apply(ball)
+        else
+          score += frameScore
+      }
     }
     score
   }

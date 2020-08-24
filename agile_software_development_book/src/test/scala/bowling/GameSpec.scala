@@ -12,11 +12,6 @@ class GameSpec extends ScalaTestSpec {
       g.getCurrentFrame shouldEqual 1
     }
 
-    "1度投げた時" in new SetUp {
-      g.add(5)
-      g.score shouldEqual 5
-    }
-
     "2度投げて一度もマークが取れない時" in new SetUp {
       g.add(5)
       g.add(4)
@@ -50,6 +45,16 @@ class GameSpec extends ScalaTestSpec {
       g.add(2)
       g.scoreForFrame(1) shouldEqual(13)
       g.scoreForFrame(2) shouldEqual(18)
+      g.score shouldEqual 18
+      g.getCurrentFrame shouldEqual 3
+    }
+
+    "ストライクを取った時" in new SetUp {
+      g.add(10)
+      g.add(3)
+      g.add(6)
+      // g.scoreForFrame(1) shouldEqual 19
+      g.score shouldEqual 28
       g.getCurrentFrame shouldEqual 3
     }
   }
