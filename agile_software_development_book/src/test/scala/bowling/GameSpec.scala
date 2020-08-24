@@ -57,5 +57,47 @@ class GameSpec extends ScalaTestSpec {
       g.score shouldEqual 28
       g.getCurrentFrame shouldEqual 3
     }
+
+    "パーフェクトゲームの時" in new SetUp {
+      for (_ <- 1 to 12) {
+        g.add(10)
+      }
+      g.score shouldEqual 300
+      g.getCurrentFrame shouldEqual 11
+    }
+
+    "最後にストライクの時" in new SetUp {
+      for (_ <- 1 to 9) {
+        g.add(0)
+        g.add(0)
+      }
+      g.add(2)
+      g.add(8)
+      g.add(10)
+      g.score shouldEqual 20
+    }
+
+    "サンプルケースの時" in new SetUp {
+      g.add(1)
+      g.add(4)
+      g.add(4)
+      g.add(5)
+      g.add(6)
+      g.add(4)
+      g.add(5)
+      g.add(5)
+      g.add(10)
+      g.add(0)
+      g.add(1)
+      g.add(7)
+      g.add(3)
+      g.add(6)
+      g.add(4)
+      g.add(10)
+      g.add(2)
+      g.add(8)
+      g.add(6)
+      g.score shouldEqual 133
+    }
   }
 }

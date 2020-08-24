@@ -4,7 +4,11 @@ class Game {
   private var itsScore: Int = 0
   private var itsThrows: List[Int] = List.empty
   private var itsCurrentFrame: Int = 1
-  private var firstThrow: Boolean = true
+  private var firstThrowInFrame: Boolean = true
+
+  private var ball: Int = 0
+  private var firstThrow: Int = 0
+  private var secondThrow: Int = 0
 
   def score: Int = scoreForFrame(getCurrentFrame-1)
 
@@ -15,37 +19,51 @@ class Game {
   }
 
   def adjustCurrentFrame(pins: Int): Unit = {
-    if (firstThrow) {
+    if (firstThrowInFrame) {
       if (pins == 10)
         itsCurrentFrame += 1
       else
-        firstThrow = false
+        firstThrowInFrame = false
     } else {
-      firstThrow = true
+      firstThrowInFrame = true
       itsCurrentFrame += 1
     }
+    itsCurrentFrame = Math.min(11, itsCurrentFrame)
   }
 
   def scoreForFrame(frame: Int): Int = {
-    var ball = 0
+    ball = 0
     var score = 0
     for (currentFrame <- 1 to frame) {
-      val firstThrow = itsThrows.apply(ball)
-      ball += 1
-      if (firstThrow == 10) {
-        score += 10 + itsThrows.apply(ball) + itsThrows.apply(ball+1)
-      } else {
-        val secondThrow = itsThrows.apply(ball)
+      firstThrow = itsThrows.apply(ball)
+      if (strike) {
         ball += 1
-        val frameScore = firstThrow + secondThrow
-        if (frameScore == 10)
-          score += frameScore + itsThrows.apply(ball)
-        else
-          score += frameScore
+        score += 10 + nextTwoBalls
+      } else {
+        score += handleSecondThrow
       }
     }
     score
   }
+
+  private def handleSecondThrow: Int = {
+    var score = 0
+    secondThrow = itsThrows.apply(ball+1)
+
+    val frameScore = firstThrow + secondThrow
+    if (frameScore == 10) {
+      ball += 2
+      score += frameScore + itsThrows.apply(ball)
+    } else {
+      ball += 2
+      score += frameScore
+    }
+    score
+  }
+
+  private def strike: Boolean = itsThrows.apply(ball) == 10
+
+  private def nextTwoBalls: Int = itsThrows.apply(ball) + itsThrows(ball+1)
 
   def getCurrentFrame: Int = itsCurrentFrame
 }
