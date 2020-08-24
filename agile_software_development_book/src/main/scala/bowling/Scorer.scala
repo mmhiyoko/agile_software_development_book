@@ -5,7 +5,6 @@ class Scorer {
   private var itsCurrentThrow: Int = 0
 
   private var ball: Int = 0
-  private var firstThrow: Int = 0
 
   def addThrow(pins: Int): Unit = {
     itsThrows = itsThrows :+ pins
@@ -16,7 +15,6 @@ class Scorer {
     ball = 0
     var score = 0
     for (currentFrame <- 1 to frame) {
-      firstThrow = itsThrows.apply(ball)
       if (strike) {
         score += 10 + nextTwoBallsForStrike
         ball += 1
@@ -35,7 +33,7 @@ class Scorer {
 
   private def nextTwoBallsForStrike: Int = itsThrows.apply(ball+1) + itsThrows(ball+2)
 
-  private def spare: Boolean = itsThrows.apply(ball) + itsThrows.apply(ball+1) == 10
+  private def spare: Boolean = (itsThrows.apply(ball) + itsThrows.apply(ball+1)) == 10
 
   private def nextBallForSpare: Int = itsThrows.apply(ball+2)
 
