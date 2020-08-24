@@ -3,22 +3,23 @@ package bowling
 import helper.ScalaTestSpec
 
 class GameSpec extends ScalaTestSpec {
+  trait SetUp {
+    val g = new Game()
+  }
+
   "ゲームのスコア計算について" should {
-    "1度投げた時" in {
-      val g = new Game()
+    "1度投げた時" in new SetUp {
       g.add(5)
       g.score shouldEqual 5
     }
 
-    "2度投げて一度もマークが取れない時" in {
-      val g = new Game()
+    "2度投げて一度もマークが取れない時" in new SetUp {
       g.add(5)
       g.add(4)
       g.score shouldEqual 9
     }
 
-    "4度投げて一度もマークが取れない時" in {
-      val g = new Game()
+    "4度投げて一度もマークが取れない時" in new SetUp {
       g.add(5)
       g.add(4)
       g.add(7)
