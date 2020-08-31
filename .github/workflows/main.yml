@@ -34,5 +34,7 @@ jobs:
         key: ${{ runner.os }}-sbt-cache-${{ github.run_id }}
         restore-keys: |
           ${{ runner.os }}-sbt-cache-
+    - name: Run scalafmt
+      run: sbt scalafmtCheck test:scalafmtCheck scalafmtSbtCheck
     - name: Run tests
       run: sbt test
