@@ -20,7 +20,8 @@ class Game {
       firstThrowInFrame = false
   }
 
-  private def lastBallInFrame(pins: Int): Boolean = strike(pins) || !firstThrowInFrame
+  private def lastBallInFrame(pins: Int): Boolean =
+    strike(pins) || !firstThrowInFrame
 
   private def strike(pins: Int): Boolean = firstThrowInFrame && pins == 10
 
