@@ -1,7 +1,5 @@
 package shape
 
-case class Circle(itsType: ShapeType, itsRadius: Double, itsCenter: Point)
-
-trait DrawCircle {
-  def draw(circle: Circle): Unit
+case class Circle(itsRadius: Double, itsCenter: Point) extends Shape {
+  override def draw(): Unit = ???
 }

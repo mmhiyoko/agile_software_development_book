@@ -1,7 +1,5 @@
 package shape
 
-case class Square(itsType: ShapeType, itsSide: Double, itsTopLeft: Point)
-
-trait DrawSquare {
-  def draw(square: Square): Unit
+case class Square(itsSide: Double, itsTopLeft: Point) extends Shape {
+  override def draw(): Unit = ???
 }

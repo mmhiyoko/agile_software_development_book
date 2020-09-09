@@ -1,3 +1,5 @@
 package shape
 
-case class Shape(itsType: ShapeType)
+trait Shape {
+  def draw(): Unit
+}
