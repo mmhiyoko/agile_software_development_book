@@ -12,4 +12,6 @@ case class Rectangle(private var itsHeight: Double,
   def getHeight: Double = height
 
   def getWidth: Double = width
+
+  def area: Double = height * width
 }
